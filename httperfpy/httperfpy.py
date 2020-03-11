@@ -57,11 +57,11 @@ class Httperf(object):
 
         for key in self.params.keys():
             val = str(self.params[key])
-            key = key.replace('_', '-')
+            key_dash = key.replace('_', '-')
             if key in self.__boolean_params():
-                args.append('--%s' % key)
+                args.append('--%s' % key_dash)
             else:
-                args.append('--%s="%s"' % (key, val))
+                args.append('--%s="%s"' % (key_dash, val))
 
         return ' '.join(args)
 
@@ -131,6 +131,8 @@ class HttperfParser(object):
 
         verbose_connection_times = []
 
+        include_header_expressions = self.__has_reply_header(result_string)
+
         for line in lines:
 
             verbose_match = verbose_expression.match(line)
@@ -144,6 +146,15 @@ class HttperfParser(object):
                     line_match = exps[key].match(line)
                     if line_match:
                         matches[key] = line_match.group(1)
+
+                if include_header_expressions:
+                    exps = self.__reply_header_expressions()
+                    for key in exps:
+                        values_list = matches.setdefault(key, [])
+                        line_match = exps[key].match(line)
+                        if line_match:
+                            values_list.append(line_match.group(1))
+                            continue
 
         if not len(verbose_connection_times) == 0:
             matches["connection_times"] = verbose_connection_times
@@ -171,6 +182,14 @@ class HttperfParser(object):
     @classmethod
     def __percentiles(self):
         return [75, 80, 85, 90, 95, 99]
+
+    @classmethod
+    def __has_reply_header(self, result_string):
+        found = re.compile("^RH.+:", re.M).search(result_string)
+        if found:
+            return True
+        else:
+            return False
 
     @classmethod
     def __expressions(self):
@@ -253,4 +272,11 @@ class HttperfParser(object):
             "errors_addr_unavail": re.compile("^Errors: fd-unavail .+ addrunavail ([0-9]*?\.?[0-9]+) ", re.I|re.M),
             "errors_ftab_full": re.compile("^Errors: fd-unavail .+ ftab-full ([0-9]*?\.?[0-9]+) ", re.I|re.M),
             "errors_other": re.compile("^Errors: fd-unavail .+ other ([0-9]*?\.?[0-9]+)", re.I|re.M)
+        }
+
+    @classmethod
+    def __reply_header_expressions(self):
+        return {
+            # X-Trace header:
+            "header_xtrace": re.compile("^RH.+:X-Trace: (.+)", re.I|re.M)
         }
