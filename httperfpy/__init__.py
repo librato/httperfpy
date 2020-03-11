@@ -1,2 +1,2 @@
-from httperfpy import Httperf, HttperfParser
+from .httperfpy import Httperf, HttperfParser
 

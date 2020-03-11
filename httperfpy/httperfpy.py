@@ -1,7 +1,6 @@
 import re
 import subprocess
 
-
 class Httperf(object):
 
     def __init__(self, *args, **kwargs):
@@ -9,7 +8,7 @@ class Httperf(object):
         self.args = []
         self.parser = False
 
-        # Poping path from kwargs if exist
+        # Popping path from kwargs if exist
         if 'path' in kwargs:
             self.path = kwargs['path']
             del kwargs['path']
@@ -47,15 +46,15 @@ class Httperf(object):
     @classmethod
     def display_params(self):
         h = Httperf()
-        for param in h.__params().keys():
-            print param
+        for param in list(h.__params().keys()):
+            print(param)
 
     def __cmd(self):
         args = [self.path]
         if self.args:
             args += self.args
 
-        for key in self.params.keys():
+        for key in list(self.params.keys()):
             val = str(self.params[key])
             key_dash = key.replace('_', '-')
             if key in self.__boolean_params():
