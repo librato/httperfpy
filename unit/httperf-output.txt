@@ -1,0 +1,74 @@
+httperf --verbose --print-reply=header --timeout=10 --client=0/1 --server=127.0.0.1 --port=8088 --uri=/ --send-buffer=4096 --recv-buffer=16384 --wsesslog=1,0.000,endpoints/todo-transactions
+httperf: maximum number of open descriptors = 1048576
+RH0:HTTP/1.1 200 OK
+RH0:X-Trace: 2B7016DCFD894C2BF8B1527412F0885224B8F766D9EE2E92462D1F9C9C01
+RH0:X-Powered-By: Express
+RH0:Content-Type: application/json; charset=utf-8
+RH0:Content-Length: 38
+RH0:ETag: W/"26-czWU8U9PIqbt9MixMpaRpFTvXew"
+RH0:Date: Thu, 07 May 2020 12:10:48 GMT
+RH0:Connection: keep-alive
+RH0:
+RS0: header 283 content 38 footer 0
+RH1:HTTP/1.1 512 unknown
+RH1:X-Trace: 2BC432C9B42041DD8F59A035E6B47A5849031F3DFAEF89C4D094BC069C01
+RH1:X-Powered-By: Express
+RH1:Content-Type: text/html; charset=utf-8
+RH1:Content-Length: 30
+RH1:ETag: W/"1e-iSyQw/t15JgQykpfAA5VnCVrSXs"
+RH1:Date: Thu, 07 May 2020 12:10:48 GMT
+RH1:Connection: keep-alive
+RH1:
+RS1: header 281 content 30 footer 0
+RH2:HTTP/1.1 200 OK
+RH2:X-Trace: 2BE40D32E42ABAB0EA99161BCE65FAAC9931466A0466A630E43A15D8DB01
+RH2:X-Powered-By: Express
+RH2:Accept-Ranges: bytes
+RH2:Cache-Control: public, max-age=0
+RH2:Last-Modified: Wed, 02 Oct 2019 16:18:25 GMT
+RH2:ETag: W/"ac4-16d8d43fba3"
+RH2:Content-Type: text/html; charset=UTF-8
+RH2:Content-Length: 2756
+RH2:Date: Thu, 07 May 2020 12:10:48 GMT
+RH2:Connection: keep-alive
+RH2:
+RS2: header 365 content 2756 footer 0
+RH29:HTTP/1.1 200 OK
+RH29:X-Trace: 2BAD744C926A885ECFF0B5CF21927BC58C81EE607171D07ECFC2B8A1B601
+RH29:X-Powered-By: Express
+RH29:Content-Type: application/json; charset=utf-8
+RH29:Content-Length: 2
+RH29:ETag: W/"2-l9Fw4VUO7kr8CvBlt4zaMCqXZ0w"
+RH29:Date: Thu, 07 May 2020 12:10:48 GMT
+RH29:Connection: keep-alive
+RH29:
+RS29: header 281 content 2 footer 0
+Maximum connect burst length: 0
+
+Total: connections 1 requests 30 replies 30 test-duration 0.060 s
+
+Connection rate: 16.6 conn/s (60.4 ms/conn, <=1 concurrent connections)
+Connection time [ms]: min 60.5 avg 60.5 max 60.5 median 60.5 stddev 0.0
+Connection time [ms]: connect 0.1
+Connection length [replies/conn]: 30.000
+
+Request rate: 496.6 req/s (2.0 ms/req)
+Request size [B]: 121.0
+
+Reply rate [replies/s]: min 0.0 avg 0.0 max 0.0 stddev 0.0 (0 samples)
+Reply time [ms]: response 2.0 transfer 0.0
+Reply size [B]: header 287.0 content 871.0 footer 0.0 (total 1158.0)
+Reply status: 1xx=0 2xx=29 3xx=0 4xx=0 5xx=1
+
+CPU time [s]: user 0.03 system 0.03 (user 52.3% system 47.1% total 99.3%)
+Net I/O: 621.0 KB/s (5.1*10^6 bps)
+
+Errors: total 0 client-timo 0 socket-timo 0 connrefused 0 connreset 0
+Errors: fd-unavail 0 addrunavail 0 ftab-full 0 other 0
+
+Session rate [sess/s]: min 0.00 avg 16.55 max 0.00 stddev 0.00 (1/1)
+Session: avg 1.00 connections/session
+Session lifetime [s]: 0.1
+Session failtime [s]: 0.0
+Session length histogram: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
+
