@@ -1,6 +1,5 @@
 import re
 import subprocess
-import sys
 
 class Httperf(object):
 
@@ -433,6 +432,8 @@ class HttperfParser(object):
 
 if (__name__ == '__main__'):
     import timeit
+    import sys
+
     f = open(sys.argv[1])
 
     data = f.read()
@@ -442,5 +443,5 @@ if (__name__ == '__main__'):
     def test():
         h.parse(data)
 
-    print('timeit {}', timeit.timeit(test, number = 100))
+    print('timeit {}', timeit.timeit('test()', number = 100, globals = globals()))
     #print(h.parse(data))
