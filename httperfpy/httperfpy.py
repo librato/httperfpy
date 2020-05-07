@@ -256,7 +256,6 @@ class HttperfParser(object):
 
 
     def __calculate_percentiles(self, pct, vct):
-
         if len(vct) == 1:
             return vct[0]
 
@@ -275,6 +274,8 @@ class HttperfParser(object):
 
     @staticmethod
     def __transitions():
+        # each key is a state and each value is the state to
+        # transition to when the key state has been matched.
         return {
             'command': 'maybe_headers',
             'total': 'connection',
@@ -296,14 +297,25 @@ class HttperfParser(object):
 
     @staticmethod
     def __expressions():
-        # abstract the floating point group
+        # abstract the integer and floating point regex patterns
         i = "[0-9]+"
-        ig = "({})".format(i)
         fp = "[-+]?[0-9]*\.?[0-9]+"
-        fpg = "({})".format(fp)
-        redict = {
-            'i': i, 'ig': ig, 'fp': fp, 'fpg': fpg
-        }
+        redict = {'i': i, 'fp': fp}
+
+        #
+        # each key is the name of a parsing state, known in the parser as
+        # "want". the value is either a compiled regular expression or it
+        # is a dict containing a regular expression and a prefix.
+        #
+        # the regular expression either has a single group or has multiple
+        # named groups. the key for the parsing state is used as name of
+        # the value when there is a single group. when there are multiple
+        # groups the key is combined with the group name to make the name
+        # of the value (and "_" is inserted between).
+        #
+        # when the value is a dict, not a compiled regular expression, then
+        # the prefix is used instead of the key/parsing state name.
+        #
         return {
             "command": re.compile("^(httperf .+)$"),
 
