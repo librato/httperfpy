@@ -7,10 +7,10 @@ A python port of httperfrb http://github.com/jmervine/httperfrb.
 Built and tested using:
 
         $ python --version
-        Python 2.7.3
+        Python 3.6.9
 
         $ uname -s -r -m
-        Linux 3.2.0-29-generic x86_64
+        Linux 4.15.0-96-generic x86_64
 
 
 
@@ -34,10 +34,18 @@ Redhat / CentOS
 
     sudo yum install httperf
 
-My 'httperf'
-------------
+mervine's modified httperf
+--------------------------
 
-** This is required for proper verbose handling. **
+This is required for extended verbose handling. We don't use it because
+tracking the variance in connection times is only useful when there is a
+uniform transaction mix and that's not applicable for our uses.
+
+If we decide to implement this at some point it should 1) probably be a
+different option that '--verbose' which httperf uses to provide detailed
+information about internal operations, not additional performance data,
+and 2) the lines should be prefixed with a consistent identifier so they
+can be processed reasonably efficiently.
 
 See: http://mervine.net/httperf-0-9-1-with-individual-connection-times.
 
