@@ -21,7 +21,7 @@ class HttperfTestCase(unittest.TestCase):
 
     def testInitHttperfWithPath(self):
         global httperf1
-        httperf1 = Httperf(path=unit_helper.httperf_path)
+        httperf1 = Httperf(path = unit_helper.httperf_path)
         assert httperf1, "Httperf did not instantiate with "+httperf_path
 
     def testInitWithPathSetsPath(self):

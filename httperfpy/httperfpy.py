@@ -131,7 +131,7 @@ class HttperfParser(object):
 
         # items that are accumulated during the parse
         verbose_connection_times = []
-        verbose_output_lines = []
+        httperf_colon_lines = []
         unknown_lines = []
         xtrace_headers = []
 
@@ -145,7 +145,7 @@ class HttperfParser(object):
                 unknown_lines.append(line)
 
         def get_verbose_output_line(line):
-            verbose_output_lines.append(line)
+            httperf_colon_lines.append(line)
 
         special_starts = {
             "Connection lifetime =": get_verbose_connection_time,
@@ -230,8 +230,8 @@ class HttperfParser(object):
         if len(unknown_lines):
             self.matches['unknown_lines'] = unknown_lines
 
-        if len(verbose_output_lines):
-            self.matches['verbose_output_lines'] = verbose_output_lines
+        if len(httperf_colon_lines):
+            self.matches['httperf_colon_lines'] = httperf_colon_lines
 
         return self.matches
     # end parse

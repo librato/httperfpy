@@ -1,7 +1,7 @@
 httperf --verbose --print-reply=header --timeout=10 --client=0/1 --server=127.0.0.1 --port=8088 --uri=/ --send-buffer=4096 --recv-buffer=16384 --wsesslog=2,0.000,endpoints/todo-transactions
 httperf: maximum number of open descriptors = 1048576
 RH0:HTTP/1.1 200 OK
-RH0:X-Trace: 2BA1266E6432D0F7263002D5B8E119FBA6196E9CDFBE08A3F70D840D2A01
+RH0:X-Trace: 2BA1266E6432D0F7263002D5B8E119FBA6196E9CDFBE08A3F70D840D2A00
 RH0:X-Powered-By: Express
 RH0:Content-Type: application/json; charset=utf-8
 RH0:Content-Length: 38
