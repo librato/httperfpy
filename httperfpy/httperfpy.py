@@ -1,5 +1,6 @@
 import re
 import subprocess
+import asyncio
 
 class Httperf(object):
 
@@ -8,7 +9,7 @@ class Httperf(object):
         self.args = []
         self.parser = False
 
-        # Popping path from kwargs if exist
+        # Pop path to httperf from kwargs if present.
         if 'path' in kwargs:
             self.path = kwargs['path']
             del kwargs['path']
@@ -30,6 +31,10 @@ class Httperf(object):
     def update_option(self, key, val):
         self.params[key] = val
 
+    def run_async(self):
+        pass
+        #proc = await asyncio.create_subprocess_exec(self.__cmd())
+
     def run(self):
         try:
             self.results = subprocess.check_output(self.__cmd(),
@@ -37,7 +42,7 @@ class Httperf(object):
                                                    stderr=subprocess.STDOUT,
                                                    close_fds=True)
             if self.parser:
-                return HttperfParser.parse(self.results)
+                return HttperfParser().parse(self.results.decode('utf8'))
             else:
                 return self.results
         except subprocess.CalledProcessError as er:
@@ -134,7 +139,7 @@ class HttperfParser(object):
         # oddball because i don't know where they can appear
         # in the output so i check each line for them.
         def get_verbose_connection_time(line):
-            if (vexpression.match(line)):
+            if vexpression.match(line):
                 verbose_connection_times.append(match.group(1))
             else:
                 unknown_lines.append(line)
@@ -158,7 +163,7 @@ class HttperfParser(object):
 
         def change_want(new_want):
             nonlocal want
-            if ('state-changes' in options and options['state-changes']):
+            if 'state-changes' in options and options['state-changes']:
                 print("state change {} => {}".format(want, new_want))
             want = new_want
 
@@ -178,26 +183,25 @@ class HttperfParser(object):
                 if line.startswith(start):
                     special_starts[start](line)
                     found = True
-                if (found):
                     break
             if found:
                 continue
 
             # if it's an unconditional transition, handle it here.
-            if (want in transitions):
-                if (self.__find_and_store(want, line)):
+            if want in transitions:
+                if self.__find_and_store(want, line):
                     change_want(transitions[want])
                     continue
 
             # keep processing header lines until a non-header lines
             # shows up.
-            if (want == 'maybe_headers'):
-                if (line.startswith('RH')):
+            if want == 'maybe_headers':
+                if line.startswith('RH'):
                     match = self.exps['header_xtrace'].match(line)
-                    if (match):
+                    if match:
                         xtrace_headers.append(match.group(1))
                     continue
-                elif (line.startswith('RS')):
+                elif line.startswith('RS'):
                     continue
                 else:
                     # it's a little awkward but we have to go past the
@@ -208,25 +212,25 @@ class HttperfParser(object):
                     continue
 
             # when done any leftover lines are unknown. currently
-            # session lines are not parsed for some reason.
-            if (want == 'done'):
+            # session lines are not parsed.
+            if want == 'done':
                 unknown_lines.append(line)
                 continue
 
         # the following ifs add the keys only if they are not empty.
-        if (len(verbose_connection_times)):
+        if len(verbose_connection_times):
             self.matches['connection_times'] = verbose_connection_times
             for pct in self.__percentiles():
                 self.matches["connection_time_" + str(pct) + "_pct"] = \
                     self.__calculate_percentiles(pct, verbose_connection_times)
 
-        if (len(xtrace_headers)):
+        if len(xtrace_headers):
             self.matches['header_xtrace'] = xtrace_headers
 
-        if (len(unknown_lines)):
+        if len(unknown_lines):
             self.matches['unknown_lines'] = unknown_lines
 
-        if (len(verbose_output_lines)):
+        if len(verbose_output_lines):
             self.matches['verbose_output_lines'] = verbose_output_lines
 
         return self.matches
@@ -239,7 +243,7 @@ class HttperfParser(object):
             prefix = regex['prefix']
             regex = regex['re']
         match = regex.match(line)
-        if (match):
+        if match:
             self.__store_matches(prefix, match)
             return True
 
@@ -248,14 +252,14 @@ class HttperfParser(object):
     def __store_matches(self, prefix, match):
         # do the matches have names?
         mapping = match.groupdict()
-        if (len(mapping)):
+        if len(mapping):
             for key in mapping:
                 self.matches[prefix + '_' + key] = mapping[key]
         else:
             self.matches[prefix] = match.group(1)
 
-
-    def __calculate_percentiles(self, pct, vct):
+    @staticmethod
+    def __calculate_percentiles(pct, vct):
         if len(vct) == 1:
             return vct[0]
 
@@ -268,7 +272,8 @@ class HttperfParser(object):
         index = int((float(len(vct))/100 * float(pct)))
         return sorted(vct)[index]
 
-    def __percentiles(self):
+    @staticmethod
+    def __percentiles():
         return [75, 80, 85, 90, 95, 99]
 
 
@@ -439,10 +444,11 @@ class HttperfParser(object):
             # Session length histogram: 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1
 
             # Headers of interest
+            # select sampled headers only.
             "header_xtrace": re.compile("^RH[0-9]+:X-Trace: ([0-9A-F]{59}1)", re.I)
         }
 
-if (__name__ == '__main__'):
+if __name__ == '__main__':
     import timeit
     import sys
 
