@@ -116,9 +116,14 @@ Stand-alone parser...
         #!/usr/bin/env python
         from httperfpy import HttperfParser
 
-        results = HttperfParser.parse(httperf_result_string)
+        parser = HttperfParser()
+        results = parser.parse(httperf_result_string [, options = {}])
         print results["connection_time_avg"] + " is avg"
         print results["connection_time_max"] + " is max"
+
+        The optional options argument is a dict with only one key at this time,
+        'state-changes', a boolean. If true it will print each state change
+        as it occurs. It was useful for debugging the state-aware parsing.
 
 
 
