@@ -207,7 +207,7 @@ class HttperfParser(object):
                     # it's a little awkward but we have to go past the
                     # headers to know that there are no more, so back up
                     # and move to the next state.
-                    change_want('total')
+                    change_want('max_connect_burst_length')
                     i -= 1
                     continue
 
@@ -283,6 +283,7 @@ class HttperfParser(object):
         # transition to when the key state has been matched.
         return {
             'command': 'maybe_headers',
+            'max_connect_burst_length': 'total',
             'total': 'connection',
             'connection': 'connection_time',
             'connection_time': 'connection_time_connect',
@@ -325,7 +326,9 @@ class HttperfParser(object):
             "command": re.compile("^(httperf .+)$"),
 
             # Maximum connect burst length:
-            "max_connect_burst_length": re.compile("Maximum connect burst length: ({fp})$"),
+            "max_connect_burst_length": re.compile(
+                "Maximum connect burst length: ({fp})$".format(**redict)
+            ),
 
             # Total: connections 1 requests 30 replies 30 test-duration 0.060 s
             "total": re.compile((
