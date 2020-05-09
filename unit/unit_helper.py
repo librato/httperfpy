@@ -1,12 +1,16 @@
 import re, os, sys
 import string
-sys.path.append(os.path.join(os.path.dirname(__file__), "..", "httperfpy"))
+
+localpath = os.path.join(os.path.dirname(__file__), "..", "httperfpy")
+# make this path first so the local version is used even if there
+# is another version on the system.
+sys.path.insert(0, localpath)
 
 from httperfpy import *
 
 global httperf_path, httperf_results, httperf_verbose_results
 
-httperf_path = string.strip(os.popen("which httperf").read())
+httperf_path = str.strip(os.popen("which httperf").read())
 
 if httperf_path == '':
     raise Exception("httperf must be install")
@@ -42,16 +46,16 @@ httperf_verbose_results = """
 httperf --verbose --client=0/1 --server=localhost --port=80 --uri=/ --send-buffer=4096 --recv-buffer=16384 --num-conns=10 --num-calls=1
 httperf: warning: open file limit > FD_SETSIZE; limiting max. # of open files to FD_SETSIZE
 httperf: maximum number of open descriptors = 1024
-Connection lifetime = 0.56    
-Connection lifetime = 0.35    
-Connection lifetime = 0.34    
-Connection lifetime = 0.33    
-Connection lifetime = 0.75    
-Connection lifetime = 0.42    
-Connection lifetime = 0.31    
-Connection lifetime = 0.31    
-Connection lifetime = 0.30    
-Connection lifetime = 0.29    
+Connection lifetime = 0.56
+Connection lifetime = 0.35
+Connection lifetime = 0.34
+Connection lifetime = 0.33
+Connection lifetime = 0.75
+Connection lifetime = 0.42
+Connection lifetime = 0.31
+Connection lifetime = 0.31
+Connection lifetime = 0.30
+Connection lifetime = 0.29
 Maximum connect burst length: 1
 
 Total: connections 10 requests 10 replies 10 test-duration 0.005 s
@@ -74,4 +78,4 @@ Net I/O: 901.0 KB/s (7.4*10^6 bps)
 
 Errors: total 0 client-timo 0 socket-timo 0 connrefused 0 connreset 0
 Errors: fd-unavail 0 addrunavail 0 ftab-full 0 other 0
-""" 
+"""

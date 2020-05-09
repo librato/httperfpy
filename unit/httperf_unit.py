@@ -33,7 +33,7 @@ class HttperfTestCase(unittest.TestCase):
         self.assertEqual(httperf.params["server"], "localhost")
         self.assertEqual(('--hog' in httperf.args), True)
 
-        res_str = httperf.run()
+        res_str = httperf.run().decode('utf-8')
         m = re.search('--hog', res_str)
         self.assertNotEqual(m, None)
 
@@ -44,7 +44,7 @@ class HttperfTestCase(unittest.TestCase):
         httperf = Httperf(hog=True, server="localhost", port=8080, num_conns=100)
         self.assertEqual(httperf.params["hog"], True)
 
-        res_str = httperf.run()
+        res_str = httperf.run().decode('utf8')
         m = re.search('--hog', res_str)
         self.assertNotEqual(m, None)
 
@@ -72,7 +72,7 @@ class HttperfTestCase(unittest.TestCase):
     def testRun(self):
         httperf = Httperf()
         global res_string
-        res_string = httperf.run()
+        res_string = httperf.run().decode('utf8')
 
         self.assertNotEqual(res_string, None)
 
@@ -91,7 +91,7 @@ class HttperfTestCase(unittest.TestCase):
 
     def testSluggedCmdArgs(self):
         httperf = Httperf(server="localhost", num_conns="5")
-        results = httperf.run()
+        results = httperf.run().decode('utf8')
         m = re.search('unrecognized option \'--num_conns=5\'', results)
         self.assertEqual(m, None)
 
