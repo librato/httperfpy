@@ -19,7 +19,7 @@ class HttperfTestCase(unittest.TestCase):
         presults = HttperfParser().parse(httperf_headers_results)
         self.assertEqual(presults, httperf_headers_parsed)
 
-    @unittest.skip('not using kmervine/httperfpy')
+    @unittest.skip('not using jmervine/httperfpy')
     def testParseVerboseResultCount(self):
         vpresults = HttperfParser().parse(httperf_verbose_results)
         self.assertEqual(len(vpresults.keys()), 57)
