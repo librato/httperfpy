@@ -31,10 +31,6 @@ class Httperf(object):
     def update_option(self, key, val):
         self.params[key] = val
 
-    def run_async(self):
-        pass
-        #proc = await asyncio.create_subprocess_exec(self.__cmd())
-
     def run(self):
         try:
             self.results = subprocess.check_output(self.__cmd(),
