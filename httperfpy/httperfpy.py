@@ -135,7 +135,8 @@ class HttperfParser(object):
         # oddball because i don't know where they can appear
         # in the output so i check each line for them.
         def get_verbose_connection_time(line):
-            if vexpression.match(line):
+            match = vexpression.match(line)
+            if match:
                 verbose_connection_times.append(match.group(1))
             else:
                 unknown_lines.append(line)
