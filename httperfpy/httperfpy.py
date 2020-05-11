@@ -317,7 +317,7 @@ class HttperfParser(object):
         # named groups. the key for the parsing state is used as name of
         # the value when there is a single group. when there are multiple
         # groups the key is combined with the group name to make the name
-        # of the value (and "_" is inserted between).
+        # of the value (an "_" is inserted between).
         #
         # when the value is a dict, not a compiled regular expression, then
         # the prefix is used instead of the key/parsing state name.
