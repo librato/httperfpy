@@ -53,8 +53,8 @@ See: http://mervine.net/httperf-0-9-1-with-individual-connection-times.
 Installation / Setup
 ====================
 
-Perferred Method
-----------------
+Perferred Method (within a container)
+-------------------------------------
 
         $ sudo pip install httperfpy
 
@@ -68,10 +68,9 @@ Simply clone code and add checkout location to your PYTHONPATH.
 Running tests...
 ----------------
 
-1. sudo apt-get install python-unit
-2. git clone https://github.com/jmervine/httperfpy.git
-3. cd httperfpy
-4. ./scripts/unit
+1. git clone https://github.com/jmervine/httperfpy.git
+2. cd httperfpy
+3. ./scripts/unit
 
 
 Usage
