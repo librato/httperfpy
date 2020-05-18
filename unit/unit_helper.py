@@ -29,7 +29,7 @@ Connection length [replies/conn]: 1.000
 Request rate: 2114.1 req/s (0.5 ms/req)
 Request size [B]: 62.0
 
-Reply rate [replies/s]: min 0.0 avg 0.0 max 0.0 stddev 0.0 (0 samples)
+Reply rate [replies/s]: min 0.6 avg 0.7 max 0.8 stddev 0.0 (4 samples)
 Reply time [ms]: response 0.4 transfer 0.0
 Reply size [B]: header 216.0 content 151.0 footer 0.0 (total 367.0)
 Reply status: 1xx=0 2xx=1 3xx=0 4xx=0 5xx=0
@@ -48,8 +48,8 @@ httperf_results_parsed = {
     'connection_time_min': '0.6', 'connection_time_avg': '0.6', 'connection_time_max': '0.6',
     'connection_time_median': '0.5', 'connection_time_stddev': '0.0', 'connection_time_connect': '0.1',
     'connection_length': '1.000', 'request_rate_per_sec': '2114.1', 'request_rate_ms_request': '0.5',
-    'request_size': '62.0', 'reply_rate_min': '0.0', 'reply_rate_avg': '0.0', 'reply_rate_max': '0.0',
-    'reply_rate_stddev': '0.0', 'reply_rate_samples': '0', 'reply_time_response': '0.4', 'reply_time_transfer': '0.0',
+    'request_size': '62.0', 'reply_rate_min': '0.6', 'reply_rate_avg': '0.7', 'reply_rate_max': '0.8',
+    'reply_rate_stddev': '0.0', 'reply_rate_samples': '4', 'reply_time_response': '0.4', 'reply_time_transfer': '0.0',
     'reply_size_header': '216.0', 'reply_size_content': '151.0', 'reply_size_footer': '0.0',
     'reply_size_total': '367.0', 'reply_status_1xx': '0', 'reply_status_2xx': '1', 'reply_status_3xx': '0',
     'reply_status_4xx': '0', 'reply_status_5xx': '0', 'cpu_time_user_sec': '0.00', 'cpu_time_system_sec': '0.00',
