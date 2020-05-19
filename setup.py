@@ -9,5 +9,5 @@ setup(
     url='http://github.com/jmervine/httperfpy',
     license='LICENSE.txt',
     description='Python wrapper for httperf.',
-    long_description=open('README.txt').read(),
+    long_description=open('README.md').read(),
 )
