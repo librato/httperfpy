@@ -214,6 +214,9 @@ class HttperfParser(object):
                 unknown_lines.append(line)
                 continue
 
+        # add xtrace headers even if the array is empty.
+        self.matches['header_xtrace'] = xtrace_headers
+
         # the following ifs add the keys only if they are not empty.
         if len(verbose_connection_times):
             self.matches['connection_times'] = verbose_connection_times
@@ -221,8 +224,6 @@ class HttperfParser(object):
                 self.matches["connection_time_" + str(pct) + "_pct"] = \
                     self.__calculate_percentiles(pct, verbose_connection_times)
 
-        if len(xtrace_headers):
-            self.matches['header_xtrace'] = xtrace_headers
 
         if len(unknown_lines):
             self.matches['unknown_lines'] = unknown_lines

@@ -57,6 +57,7 @@ httperf_results_parsed = {
     'net_io_bps': '7.3*10^6', 'errors_total': '0', 'errors_client_timeout': '0', 'errors_socket_timeout': '0',
     'errors_conn_refused': '0', 'errors_conn_reset': '0', 'errors_fd_unavail': '0', 'errors_addr_unavail': '0',
     'errors_ftab_full': '0', 'errors_other': '0',
+    'header_xtrace': [],
     'httperf_colon_lines':
         ['httperf: warning: open file limit > FD_SETSIZE; limiting max. # of open files to FD_SETSIZE']
 }
