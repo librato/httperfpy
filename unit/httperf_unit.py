@@ -87,7 +87,7 @@ class HttperfTestCase(unittest.TestCase):
         httperf = Httperf()
         httperf.parser = True
         results = httperf.run()
-        self.assertEqual(len(results), 50)
+        self.assertEqual(len(results), 51)
 
     def testSluggedCmdArgs(self):
         httperf = Httperf(server="localhost", num_conns="5")

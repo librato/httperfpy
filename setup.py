@@ -1,8 +1,9 @@
 from distutils.core import setup
+from httperfpy import __version__
 
 setup(
     name='httperfpy',
-    version='0.0.5',
+    version=__version__,
     author='Joshua P. Mervine',
     author_email='joshua@mervine.net',
     packages=['httperfpy'],
